@@ -1,0 +1,547 @@
+    
+<html>
+  <head>
+	<style type="text/css">body {zoom:0.7;}</style>
+    <meta charset="UTF-8">
+    <title><h2>DesNet: A multi-channel deep complexed neural network for joint speech dereverberation, enhancementand separation</h2> </title>
+    <link rel="stylesheet" type="text/css" href="../../stylesheet.css"/>
+  </head>
+  <body>
+    <article>
+      <header>
+	  <p></p><font size="3" color="red">To make sure the correct format and representation of audios and pictures, we suggest you to open this website by chrome.</font></div>
+        <div style="text-align:center"><h1>DesNet: A multi-channel deep complexed neural network for joint speech dereverberation, enhancementand separation</h1>
+		<div size="3" style="text-align:center"><h1>Yihui Fu, Jian Wu, Yanxin Hu, Mengtao Xing</h1>
+      </header>
+    </article>
+    <!-- <div><b>Paper:</b> <a href="https://www.baidu.com">arXiv</a> <a href="http://www.baidu.com">ICASSP 2019</a></div> -->
+	<div style="margin-right: auto;margin-left: auto; margin-top: 30px; margin-bottom: 100px; width: 70%;"deep="0">
+    <div><b><h2>Abstract:</h2></b> In this paper, we proposed an multi-channel deep complexed neural network for joint speech dereverberation, enhancement and separation (DesNet). To enable the gradient propagation and joint optimization of the those three modules, we adopted the attentional selection mechanism of the multi-channel features, which is originally proposed in end-to-end unmixing, fixed-beamforming and extraction (E2E-UFE) structure and the novel deep complex convolutional recurrent nework (DCCRN) as the structure of the speech unmixing. The neural network based WPE is cascaded beforehand for speech dereverberation. To further improve the final performance, we also introduced the staged SNR and discriminative loss strategy for speech enhancement and separation tasks. In our experiments, staged SNR improves 0.01 on PESQ in speech enhancement task and 1.22 dB on SI-SNR in speech separation task, while discriminative loss improves 0.13 on PESQ in speech enhancement task and 0.56 dB on SI-SNR in speech separation task. </div>
+    <br></br>
+	<div><b><h2>DesNet Architecture:</h2></b>
+    <br><div style="text-align: center;"><img src="DesNet.png"></div></br>
+    <hr style="height:1px;border:none;border-top:1px solid #555555; width:100%">
+    <h2>Part1: Non-dereveberated</h2>
+     <style type="text/css">
+    .tg {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    .tg td {
+      border-bottom-width: 1px;
+      border-color: black;
+      border-style: solid;
+      border-top-width: 1px;
+      border-width: 0px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+
+    .tg th {
+      border-bottom-width: 1px;
+      border-color: black;
+      border-style: solid;
+      border-top-width: 1px;
+      border-width: 0px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+
+    .tg .tg-c3ow {
+      border-color: inherit;
+      font-weight: bold;
+      text-align: center;
+      vertical-align: top
+    }
+
+    .tg .tg-0pky {
+      border-color: inherit;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .tg .tg-pcvp {
+      border-color: inherit;
+      text-align: center;
+      vertical-align: top
+    }
+
+    .tg .tg-ihkz {
+      border-color: inherit;
+      text-align: center;
+      vertical-align: top
+    }
+
+    .tg .tg-7kms {
+      border-color: inherit;
+      font-family: Arial, Helvetica, sans-serif !important;
+      ;
+      text-align: center;
+      vertical-align: top
+    }
+  </style>
+  <table class="tg" style="undefined;table-layout: fixed; width: 493px">
+    <colgroup>
+      <col style="width: 100px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+    </colgroup>
+    <thead>
+      <tr>
+      	<th class="tg-c3ow">Model</th>
+        <th class="tg-c3ow">SE</th>
+        <th class="tg-c3ow">CSS_spk1</th>
+        <th class="tg-c3ow">CSS_spk2</th>
+        <th class="tg-c3ow">NSS_spk1</th>
+        <th class="tg-c3ow">NSS_spk2</th>
+      </tr>
+    </thead>
+     <tbody>
+     <h4>Sample1</h4>
+      <tr>
+        <td class="tg-pcvp">Mix</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_input/snr5_358_199_wav864.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_input/snr0_358_199_wav864.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_input/snr0_358_199_wav864.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Cacgmm</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_cacgmm/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_cacgmm/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_cacgmm/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_cacgmm/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_cacgmm/snr0_358_199_wav864_1.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Proposed DesNet</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_proposed/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_proposed/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_proposed/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_proposed/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_proposed/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without staged SNR</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_yitiaolong/snr5_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_yitiaolong/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_yitiaolong/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_yitiaolong/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_yitiaolong/snr0_358_199_wav864_1.wav"></audio></td>
+      </tr>
+       <tr>
+        <td class="tg-pcvp">DesNet without descriminative loss</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_nofix/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_nofix/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_nofix/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_nofix/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_nofix/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DCCRN</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_dccrn/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_dccrn/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_dccrn/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_dccrn/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_dccrn/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">FASNet</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_fasnet/snr5_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_fasnet/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_fasnet/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_fasnet/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_fasnet/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+    </tbody>
+</table>
+<table class="tg" style="undefined;table-layout: fixed; width: 493px">
+    <colgroup>
+      <col style="width: 100px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+    </colgroup>
+    <thead>
+      <tr>
+      	<th class="tg-c3ow">Model</th>
+        <th class="tg-c3ow">SE</th>
+        <th class="tg-c3ow">CSS_spk1</th>
+        <th class="tg-c3ow">CSS_spk2</th>
+        <th class="tg-c3ow">NSS_spk1</th>
+        <th class="tg-c3ow">NSS_spk2</th>
+      </tr>
+    </thead>    
+    <tbody>
+      <h4>Sample2</h4>
+      <tr>
+        <td class="tg-pcvp">Mix</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_input/snr5_359_165_wav1294.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_input/snr0_359_165_wav1294.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_input/snr0_359_165_wav1294.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Cacgmm</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_cacgmm/snr5_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_cacgmm/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_cacgmm/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_cacgmm/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_cacgmm/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Proposed DesNet</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_proposed/snr5_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_proposed/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_proposed/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_proposed/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_proposed/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without staged SNR</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_yitiaolong/snr5_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_yitiaolong/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_yitiaolong/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_yitiaolong/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_yitiaolong/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+       <tr>
+        <td class="tg-pcvp">DesNet without descriminative loss</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_nofix/snr5_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_nofix/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_nofix/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_nofix/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_nofix/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DCCRN</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_dccrn/snr5_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_dccrn/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_dccrn/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_dccrn/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_dccrn/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">FASNet</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_fasnet/snr5_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_fasnet/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_fasnet/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_fasnet/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+se_fasnet/snr0_359_165_wav1294_1.wav"></audio></td>
+      </tr>
+  </tbody>
+
+</table>
+
+<hr style="height:1px;border:none;border-top:1px solid #555555; width:100%">
+<h2>Part2: Dereveberated</h2>
+<table class="tg" style="undefined;table-layout: fixed; width: 493px">
+    <colgroup>
+      <col style="width: 100px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+    </colgroup>
+    <thead>
+      <tr>
+      	<th class="tg-c3ow">Model</th>
+        <th class="tg-c3ow">SE</th>
+        <th class="tg-c3ow">CSS_spk1</th>
+        <th class="tg-c3ow">CSS_spk2</th>
+        <th class="tg-c3ow">NSS_spk1</th>
+        <th class="tg-c3ow">NSS_spk2</th>
+      </tr>
+    </thead>    
+    <tbody>
+      <h4>Sample1</h4>
+      <tr>
+        <td class="tg-pcvp">Mix</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_input/snr5_358_199_wav864.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_input/snr0_358_199_wav864.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_input/snr0_358_199_wav864.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Cacgmm</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se_cacgmm/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_cacgmm/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/ss_cacgmm/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_cacgmm/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="undrvdemo/se+ss_cacgmm/snr0_358_199_wav864_1.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Proposed DesNet</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_nofix/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_nofix/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_nofix/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_nofix/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_nofix/snr0_358_199_wav864_1.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without staged SNR</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_yitiaolong/snr5_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yitiaolong/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yitiaolong/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yitiaolong/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yitiaolong/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+       <tr>
+        <td class="tg-pcvp">DesNet without descriminative loss</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_fix/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_fix/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_fix/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_fix/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_fix/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">WPE-DCCRN</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_dccrn/snr5_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_dccrn/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_dccrn/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_dccrn/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_dccrn/snr0_358_199_wav864_1.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without DNN-WPE</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_yingqu/snr5_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yingqu/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yingqu/snr0_358_199_wav864_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yingqu/snr0_358_199_wav864_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yingqu/snr0_358_199_wav864_2.wav"></audio></td>
+      </tr>
+  </tbody>
+
+</table>
+
+
+<table class="tg" style="undefined;table-layout: fixed; width: 493px">
+    <colgroup>
+      <col style="width: 100px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+      <col style="width: 300px">
+    </colgroup>
+    <thead>
+      <tr>
+      	<th class="tg-c3ow">Model</th>
+        <th class="tg-c3ow">SE</th>
+        <th class="tg-c3ow">CSS_spk1</th>
+        <th class="tg-c3ow">CSS_spk2</th>
+        <th class="tg-c3ow">NSS_spk1</th>
+        <th class="tg-c3ow">NSS_spk2</th>
+      </tr>
+    </thead>    
+    <tbody>
+      <h4>Sample2</h4>
+      <tr>
+        <td class="tg-pcvp">Mix</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_input/snr5_359_165_wav1294.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_input/snr0_359_165_wav1294.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+ss_input/snr0_359_165_wav1294.wav"></audio></td>
+        <td class="tg-ihkz">&nbsp</td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Cacgmm</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_cacgmm/snr5_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_cacgmm/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_cacgmm/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+ss_cacgmm/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+ss_cacgmm/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">Proposed DesNet</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_nofix/snr5_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_nofix/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_nofix/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_nofix/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_nofix/snr0_359_165_wav1294_1.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without staged SNR</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_yitiaolong/snr5_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yitiaolong/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yitiaolong/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yitiaolong/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yitiaolong/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without descriminative loss</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_fix/snr5_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_fix/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_fix/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_fix/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_fix/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">WPE-DCCRN</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_dccrn/snr5_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_dccrn/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_dccrn/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_dccrn/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_dccrn/snr0_359_165_wav1294_1.wav"></audio></td>
+      </tr>
+      <tr>
+        <td class="tg-pcvp">DesNet without DNN-WPE</td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se_yingqu/snr5_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yingqu/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/ss_yingqu/snr0_359_165_wav1294_2.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yingqu/snr0_359_165_wav1294_1.wav"></audio></td>
+        <td class="tg-ihkz"><audio controls="">
+            <source src="drvdemo/se+se_yingqu/snr0_359_165_wav1294_2.wav"></audio></td>
+      </tr>
+  </tbody>
+
+</table>
+<hr style="height:1px;border:none;border-top:1px solid #555555; width:100%">
